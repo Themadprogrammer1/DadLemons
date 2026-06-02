@@ -419,6 +419,7 @@ body {
 .timeline-track-wrapper {
   padding: 1.5rem 0.5rem 0.5rem 0.5rem;
   position: relative;
+  direction: ltr !important; /* Force Left-To-Right for timeline calculations and progress lines to flow consistently */
 }
 
 .timeline-main-line {
@@ -500,12 +501,14 @@ body {
   font-weight: 700;
   margin-top: 1rem;
   color: var(--text-primary);
+  direction: initial; /* Reset text direction to native language flow */
 }
 
 .node-date {
   font-size: 0.75rem;
   color: var(--text-secondary);
   margin-top: 0.25rem;
+  direction: initial; /* Reset text direction to native language flow */
 }
 
 @media (max-width: 640px) {
@@ -851,3 +854,37 @@ body {
   color: var(--text-secondary);
   line-height: 1.6;
 }
+
+/* Mobile Small Screen Cropping Adjustments */
+@media (max-width: 480px) {
+  .time-grid {
+    gap: 0.4rem !important;
+    margin-bottom: 1.25rem !important;
+  }
+  .time-value {
+    font-size: 1.45rem !important;
+    margin-bottom: 0.15rem !important;
+  }
+  .time-box {
+    padding: 0.65rem 0.15rem !important;
+    border-radius: 10px !important;
+  }
+  .time-label {
+    font-size: 0.55rem !important;
+    letter-spacing: 0 !important;
+  }
+  .countdown-card {
+    padding: 1.5rem 1rem !important;
+    border-radius: 16px !important;
+  }
+  .card-title {
+    font-size: 1.4rem !important;
+  }
+  .hero-title {
+    font-size: 2.2rem !important;
+  }
+  .timeline-card {
+    padding: 1.25rem !important;
+  }
+}
+

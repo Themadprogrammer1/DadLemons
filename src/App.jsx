@@ -13,10 +13,10 @@ import {
   Calendar 
 } from 'lucide-react';
 
-// Default values (planting on Tu BiShvat 2025, Orlah ending on Tu BiShvat 2028, Chulin starting Tu BiShvat 2029)
-const DEFAULT_PLANTING_DATE = '2025-02-13';
-const DEFAULT_ORLAH_DATE = '2028-02-11';
-const DEFAULT_CHULIN_DATE = '2029-01-31';
+// Default values (planting closer to Tisha B'Av 2025 with exact hours, Orlah ending 2028, Chulin starting 2029)
+const DEFAULT_PLANTING_DATE = '2025-08-03T08:00';
+const DEFAULT_ORLAH_DATE = '2028-02-11T17:00';
+const DEFAULT_CHULIN_DATE = '2029-01-31T17:00';
 
 const TRANSLATIONS = {
   he: {
@@ -244,10 +244,13 @@ function App() {
   const formatDate = (dateStr) => {
     try {
       const date = new Date(dateStr);
-      return date.toLocaleDateString(lang === 'he' ? 'he-IL' : 'en-US', {
+      return date.toLocaleString(lang === 'he' ? 'he-IL' : 'en-US', {
         year: 'numeric',
         month: 'short',
-        day: 'numeric'
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
       });
     } catch {
       return dateStr;
@@ -461,9 +464,9 @@ function App() {
             style={{ width: `${calculations.todayRelativePosition}%` }}
           />
           
-          <div className="timeline-nodes">
+          <div className="timeline-nodes" style={{ position: 'relative', width: '100%', height: '80px' }}>
             {/* Planting Node */}
-            <div className="timeline-node">
+            <div className="timeline-node" style={{ position: 'absolute', left: 'calc(0% - 60px)', top: 0 }}>
               <div className="node-dot completed">
                 <CheckCircle size={12} />
               </div>
@@ -498,7 +501,7 @@ function App() {
             </div>
 
             {/* Chulin Starts Node */}
-            <div className="timeline-node" style={{ position: 'absolute', right: '-60px', top: 0 }}>
+            <div className="timeline-node" style={{ position: 'absolute', left: 'calc(100% - 60px)', top: 0 }}>
               <div className={`node-dot ${calculations.isChulinOver ? 'completed' : 'active'}`}>
                 {calculations.isChulinOver ? <CheckCircle size={12} /> : '2'}
               </div>
@@ -569,7 +572,7 @@ function App() {
             <div className="form-group">
               <label className="form-label">{t.plantingInput}</label>
               <input 
-                type="date" 
+                type="datetime-local" 
                 className="input-date" 
                 value={tempPlanting}
                 onChange={(e) => setTempPlanting(e.target.value)}
@@ -580,7 +583,7 @@ function App() {
             <div className="form-group">
               <label className="form-label">{t.orlahInput}</label>
               <input 
-                type="date" 
+                type="datetime-local" 
                 className="input-date" 
                 value={tempOrlah}
                 onChange={(e) => setTempOrlah(e.target.value)}
@@ -591,7 +594,7 @@ function App() {
             <div className="form-group">
               <label className="form-label">{t.chulinInput}</label>
               <input 
-                type="date" 
+                type="datetime-local" 
                 className="input-date" 
                 value={tempChulin}
                 onChange={(e) => setTempChulin(e.target.value)}
